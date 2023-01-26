@@ -1,28 +1,38 @@
-type TableData = { [x: string]: string };
-// interface TableData { [x: string]: string}
+import { IStack } from "./types";
 
-const enum TableKey {
-  ID = "ID",
-  FirstName = "firstName",
-  LastName = "lastName",
-  Score = "score",
+class Stack<T> implements IStack<T> {
+  private storage: T[] = [];
+
+  constructor(private capacity = 4) {}
+
+  push(item: T): void {
+    if (this.size() === this.capacity) {
+      throw Error("stack is full");
+    }
+
+    this.storage.push(item);
+  }
+
+  pop(): T | undefined {
+    return this.storage.pop();
+  }
+
+  peek(): T | undefined {
+    return this.storage[this.size() - 1];
+  }
+
+  size(): number {
+    return this.storage.length;
+  }
 }
 
-type StrictTableData = { [key in TableKey]: string };
-type LessStrictTableData = { [key in TableKey]?: string };
+const numberStack = new Stack<number>();
+// numberStack.push(1);
+// numberStack.push(2);
+// numberStack.push(3);
+// numberStack.push(100);
 
-// const myTableData: StrictTableData = {
-//   ID: "1",
-//   firstName: "Jane",
-//   lastName: "doe",
-//   score: "100",
-//   age: "99", // error: 설정되지 않은 값
-//   petName: "Hari", // error: 설정되지 않은 값
-// };
+// console.log(numberStack.peek()); // 100
+// console.log(numberStack.size()); // 4
 
-const myTableData: LessStrictTableData = {
-  ID: "1",
-  firstName: "Jane",
-  lastName: "doe",
-  //   score: "100", // ? 포함되어 있으므로 프로퍼티가 없어도 허용됨
-};
+// numberStack.push(101); // ❌ Error: stack is full
