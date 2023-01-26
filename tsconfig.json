@@ -8,6 +8,7 @@
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "moduleDetection": "force" // 다른 파일에서도 같은 변수를 사용하게 해줌
   }
 }
